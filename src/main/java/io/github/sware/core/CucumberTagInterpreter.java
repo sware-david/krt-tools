@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author David Gutarra Ramos
+ * @author David J. Gutarra Ramos
+ * @version 1.0
+ * @since 1.0
  */
 
 public class CucumberTagInterpreter {
@@ -17,11 +19,11 @@ public class CucumberTagInterpreter {
         formatedTags.clear();
 
         tagsList.forEach(tag -> {
-            for (String tSplitedAnd: tag.split("[ ]+([Aa][Nn][Dd])[ ]+")) {
+            for (String tSplitedAnd : tag.split("[ ]+([Aa][Nn][Dd])[ ]+")) {
                 String cleanTag = tSplitedAnd.replaceAll("[ ]+([Oo][Rr])[ ]+", ",");
-                cleanTag = cleanTag.replaceAll(" *([Nn][Oo][Tt]) +","~").trim();
+                cleanTag = cleanTag.replaceAll(" *([Nn][Oo][Tt]) +", "~").trim();
 
-                /* remove parentheses to  prevent error on krt core, replace with space*/
+                /* remove parentheses to prevent error on krt core, replace with space */
                 cleanTag.replaceAll("[(]|[)]", " ");
                 formatedTags.add(cleanTag);
                 logger.debug("configuring tag: {}", cleanTag);

@@ -6,6 +6,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author David J. Gutarra Ramos
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class FilterSystemProperties {
     private static final Logger logger = LoggerFactory.getLogger(FilterSystemProperties.class);
     private static final String keyOptions = "karate.options";
@@ -15,7 +21,7 @@ public class FilterSystemProperties {
         String krtOptions = System.getProperty(keyOptions, "");
         if (!krtOptions.isEmpty()) {
             logger.trace("get krt options from system: {} = '{}'", keyOptions, krtOptions);
-            List.of(krtOptions.split("^(--|-)| +(--|-)")).forEach( opt -> {
+            List.of(krtOptions.split("^(--|-)| +(--|-)")).forEach(opt -> {
                 if (opt.startsWith("tags") || opt.startsWith("t")) {
                     String clearOption = opt.replaceAll("^(tags|t[ ]*?(?=@))", "").trim();
                     if (!clearOption.isEmpty() && clearOption.startsWith("@")) {
