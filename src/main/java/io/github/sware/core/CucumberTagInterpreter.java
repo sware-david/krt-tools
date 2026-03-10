@@ -1,9 +1,13 @@
-package io.github.swaredavid.core;
+package io.github.sware.core;
 
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+/**
+ * @author David Gutarra Ramos
+ */
 
 public class CucumberTagInterpreter {
     private static final Logger logger = LoggerFactory.getLogger(CucumberTagInterpreter.class);

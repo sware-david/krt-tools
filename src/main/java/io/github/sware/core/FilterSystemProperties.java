@@ -1,4 +1,4 @@
-package io.github.swaredavid.core;
+package io.github.sware.core;
 
 import java.util.ArrayList;
 import java.util.List;
