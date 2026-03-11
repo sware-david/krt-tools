@@ -16,6 +16,31 @@ public class FilterSystemProperties {
     private static final Logger logger = LoggerFactory.getLogger(FilterSystemProperties.class);
     private static final String keyOptions = "karate.options";
 
+    /**
+     * <code>Spanish</code><br>
+     * Este método realiza el filtrado de las opciones de Karate desde las
+     * propiedades del sistema <code>-Dkarate.options</code>, filtra las opciones de
+     * las etiquetas <code>-t</code> y <code>--tags</code> recupera los valores y
+     * los almacena para posteriormente retornarlos, haciendo una validación mínima
+     * de los valores de las opciones. Finalmente realiza una limpieza de las
+     * opciones de Karate DSL.
+     * <br>
+     * <br>
+     * <code>English</code><br>
+     * This method filters the Karate options from the system properties
+     * <code>-Dkarate.options</code>, filters the options from the <code>-t</code>
+     * and <code>--tags</code> labels, retrieves the values, and stores them to
+     * return them later, performing a minimal validation of the option values.
+     * Finally, it cleans up the Karate options of Karate DSL.
+     * <br>
+     * 
+     * @see <a href=
+     *      "https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#karateoptions">Karate
+     *      DLS options</a>
+     * 
+     * @return ArrayList of tags configured from system properties, for example
+     *         <code>-Dkarate.options=... --tags @example1 or ... @etc</code>
+     */
     public static ArrayList<String> getTags() {
         ArrayList<String> options = new ArrayList<>();
         String krtOptions = System.getProperty(keyOptions, "");
@@ -38,6 +63,10 @@ public class FilterSystemProperties {
         return options;
     }
 
+    /**
+     * This method cleans up the <code>karate.options</code> system property at
+     * runtime.
+     */
     private static void removeTagsFromOptions() {
         String krtOptions = System.getProperty(keyOptions);
         krtOptions = krtOptions.replaceAll("(--tags|-t[ ]*@).*?(?=( -|$))", "").trim();
