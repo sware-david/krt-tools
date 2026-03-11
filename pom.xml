@@ -4,16 +4,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.swaredavid</groupId>
+    <groupId>io.github.sware-david</groupId>
     <artifactId>krt-tools</artifactId>
-    <name>Krt Tools</name>
-    <description>Complementary tools for karate testing</description>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Krt Tools provides complementary tools for karate testing</description>
     <version>1.0.0</version>
+    <inceptionYear>2026</inceptionYear>
+    <url>https://github.com/sware-david/krt-tools</url>
+
+    <scm>
+        <url>https://github.com/sware-david/krt-tools/tree/main</url>
+        <connection>scm:git:git://github.com/sware-david/krt-tools.git</connection>
+        <developerConnection>scm:git:ssh://github.com:sware-david/krt-tools.git</developerConnection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <contributors>
         <contributor>
             <name>David Gutarra R</name>
             <email>davidgutarraramos@gmail.com</email>
+            <url>https://github.com/sware-david</url>
             <timezone>UTC-05:00</timezone>
             <roles>
                 <role>developer</role>
