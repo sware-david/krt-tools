@@ -1,3 +1,19 @@
+/**
+ * Copyright 2026 David Gutarra R.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.sware.tools;
 
 import java.util.ArrayList;
@@ -69,17 +85,17 @@ public class KrtTools {
      * 
      * <pre>
      * // for test from Karate.run
-     * Karate testTags() {
-     *     return Karate.run("...").tags("@second").relativeTo(getClass());
-     * }
+     *Karate testTags() {
+     *    return Karate.run("...").tags("@second").relativeTo(getClass());
+     *}
      * // for test from Runner of karate
-     * void testParallel() {
-     *     Results results = Runner.path("classpath:...").tags("~@skipme").parallel(7);
-     *     assertEquals(0, results.getFailCount(), results.getErrorMessages());
-     * }
+     *public void testParallel() {
+     *    Results results = Runner.path("classpath:...").tags("~@skipme").parallel(7);
+     *    assertEquals(0, results.getFailCount(), results.getErrorMessages());
+     *}
      * 
      * // using karate tools:
-     * <code>... tags(KrtTools.from("@second and not @skip")) ...</code>
+     * <code>... tags(KrtTools.configTags("@second and not @skip")) ...</code>
      * </pre>
      * 
      * <br>
@@ -92,16 +108,28 @@ public class KrtTools {
      * </ol>
      * <br>
      * 
-     * @see <a href="https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#parallel-execution">Karate DSL - Parallel-Execution</a>
-     * @see <a href="https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#junit-5">Karate DSL - Junit-5</a>
-     * @see <a href="https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#karateoptions">Karate DSL - Karateoptions</a>
-     * @see <a href="https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#command-line">Karate DSL - Command-Line</a>
-     * @see <a href="https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber Tags Expressions</a>
-     * @see <a href="https://behave.readthedocs.io/en/latest/tag_expressions/">Behave Tags Expressions</a>
+     * @see <a href=
+     *      "https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#parallel-execution">Karate
+     *      DSL - Parallel-Execution</a>
+     * @see <a href=
+     *      "https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#junit-5">Karate
+     *      DSL - Junit-5</a>
+     * @see <a href=
+     *      "https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#karateoptions">Karate
+     *      DSL - Karateoptions</a>
+     * @see <a href=
+     *      "https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#command-line">Karate
+     *      DSL - Command-Line</a>
+     * @see <a href=
+     *      "https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber Tags
+     *      Expressions</a>
+     * @see <a href=
+     *      "https://behave.readthedocs.io/en/latest/tag_expressions/">Behave Tags
+     *      Expressions</a>
      * @param tgs text or texts to filter tests using tags
      * @return Legible tags for karate runners or Karate DSL
      */
-    public static String[] from(String... tgs) {
+    public static String[] configTags(String... tgs) {
         ArrayList<String> tags;
         /* priority: 1. System properties 2. tags from arguments */
         tags = FilterSystemProperties.getTags();
