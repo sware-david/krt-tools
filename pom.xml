@@ -26,8 +26,8 @@
         </license>
     </licenses>
 
-    <contributors>
-        <contributor>
+    <developers>
+        <developer>
             <name>David Gutarra R</name>
             <email>davidgutarraramos@gmail.com</email>
             <url>https://github.com/sware-david</url>
@@ -36,8 +36,8 @@
             <roles>
                 <role>developer</role>
             </roles>
-        </contributor>
-    </contributors>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -100,15 +100,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>${maven.gpg.plugin}</version>
-                        <configuration>
-                            <!-- Optional: specify which key to use -->
-                            <keyname>${env:GPG_KEYNAME}</keyname>
-                            <!-- Prevent gpg from using pinentry programs -->
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
