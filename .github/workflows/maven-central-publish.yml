@@ -36,6 +36,16 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           # settings-path: ${{ github.workspace }} # location for the settings.xml file
 
+      - name: Configure custom settings.xml
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          servers: |
+            [{
+                "id": "maven-central",
+                "username": "${{ secrets.CENTRAL_SONATYPE_USER }}",
+                "password": "${{ secrets.CENTRAL_SONATYPE_PASS }}"
+            }]
+
       - name: Clean workspace
         run: mvn clean
 
@@ -48,4 +58,3 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_SONATYPE_USER }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.CENTRAL_SONATYPE_PASS }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_PASSWORD }}
-          # GPG_KEYNAME: ${{ secrets.GPG_SECRET_NAME }}
