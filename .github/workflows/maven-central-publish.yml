@@ -1,0 +1,46 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: Maven Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: deployment-central
+    name: Publish artifact via The Central Portal
+    permissions:
+      contents: read
+      # packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Java Development Kit
+        uses: actions/setup-java@v4
+        with:
+          java-version: "11"
+          distribution: "zulu"
+          cache: maven
+          server-id: central
+          server-username: ${{ secrets.CENTRAL_SONATYPE_USER }} # env variable for username in deploy
+          server-password: ${{ secrets.CENTRAL_SONATYPE_PASS }} # env variable for token in deploy
+          gpg-private-key: ${{ secrets.GPG_SECRET_PRIVATE_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: ${{ secrets.GPG_SECRET_PASSWORD }}
+          # settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: Clean workspace
+        run: mvn clean
+
+      - name: Build with Maven
+        run: mvn package --file pom.xml
+
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn deploy -P ${{ vars.MAVEN_PROFILE }}
