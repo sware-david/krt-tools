@@ -44,3 +44,5 @@ jobs:
 
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -P ${{ vars.MAVEN_PROFILE }}
+        env:
+          GPG_KEYNAME: ${{ secrets.GPG_SECRET_NAME }}
