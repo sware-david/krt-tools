@@ -6,13 +6,132 @@
 
     <groupId>io.github.sware-david</groupId>
     <artifactId>krt-tools</artifactId>
-    <name>Krt tools</name>
-    <description>Complementary tools for karate testing</description>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Krt Tools provides complementary tools for karate testing</description>
     <version>1.0.0</version>
+    <inceptionYear>2026</inceptionYear>
+    <url>https://github.com/sware-david/krt-tools</url>
+
+    <scm>
+        <url>https://github.com/sware-david/krt-tools/tree/main</url>
+        <connection>scm:git:git://github.com/sware-david/krt-tools.git</connection>
+        <developerConnection>scm:git:ssh://github.com:sware-david/krt-tools.git</developerConnection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <contributors>
+        <contributor>
+            <name>David Gutarra R</name>
+            <email>davidgutarraramos@gmail.com</email>
+            <url>https://github.com/sware-david</url>
+            <organization>Sware</organization>
+            <timezone>UTC-05:00</timezone>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </contributor>
+    </contributors>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.source.plugin>3.4.0</maven.source.plugin>
+        <maven.javadoc.plugin>3.12.0</maven.javadoc.plugin>
+        <maven.gpg.plugin>3.2.8</maven.gpg.plugin>
+        <central.publishing.maven.plugin>0.10.0</central.publishing.maven.plugin>
     </properties>
 
+    <dependencies>
+        <!-- Ussing dependencies from karate, to prevent broken logs -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.32</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>sonatype-deployment-central</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven.source.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven.javadoc.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin}</version>
+                        <configuration>
+                            <!-- Optional: specify which key to use -->
+                            <keyname>${env:GPG_KEYNAME}</keyname>
+                            <!-- Prevent gpg from using pinentry programs -->
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${central.publishing.maven.plugin}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>maven-central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>uploaded</waitUntil>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

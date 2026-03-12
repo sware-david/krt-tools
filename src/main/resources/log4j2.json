@@ -1,0 +1,50 @@
+{
+    "Configuration": {
+        "Appenders": {
+            "Console": [
+                {
+                    "name": "console_log",
+                    "PatternLayout": {
+                        "pattern": "%d [%t] %p %c - %m%n"
+                    }
+                }
+            ],
+            "File": [
+                {
+                    "name": "app_log",
+                    "fileName": "logs/application.logs.jsonl",
+                    "JsonTemplateLayout": {}
+                },
+                {
+                    "name": "debug_app_log",
+                    "fileName": "logs/application.logs.log",
+                    "PatternLayout": {
+                        "pattern": "%d [%t] %p %c - %m%n"
+                    }
+                }
+            ]
+        },
+        "Loggers": {
+            "Root": {
+                "AppenderRef": [
+                    {
+                        "ref": "console_log",
+                        "level": "DEBUG"
+                    }
+                ]
+            },
+            "Logger": {
+                "name": "io.github.sware",
+                "level": "TRACE",
+                "AppenderRef": [
+                    {
+                        "ref": "app_log"
+                    },
+                    {
+                        "ref": "debug_app_log"
+                    }
+                ]
+            }
+        }
+    }
+}
