@@ -16,6 +16,16 @@ This repository contains utilities and tools developed in Java to facilitate, ex
 
 ## How to use
 
+Configure the dependency in the `pom.xml` file.
+
+```xml
+<dependency>
+    <groupId>io.github.sware-david</groupId>
+    <artifactId>krt-tools</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ### Tags configuration for Karate
 
 Only with the implementation of Karate and test runners, you should know the syntax of Tag-expression-v1.
