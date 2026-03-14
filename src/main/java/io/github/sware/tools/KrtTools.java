@@ -16,6 +16,7 @@
 
 package io.github.sware.tools;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -130,7 +131,7 @@ public class KrtTools {
      * @return Legible tags for karate runners or Karate DSL
      */
     public static String[] configTags(String... tgs) {
-        ArrayList<String> tags;
+        List<String> tags;
         /* priority: 1. System properties 2. tags from arguments */
         tags = FilterSystemProperties.getTags();
         if (tags.isEmpty()) {
@@ -143,7 +144,7 @@ public class KrtTools {
         tags.removeIf(String::isBlank);
         tags.removeIf(String::isEmpty);
 
-        ArrayList<String> formattedTags = CucumberTagInterpreter.formatTags(tags);
+        List<String> formattedTags = CucumberTagInterpreter.formatTags(tags);
         logger.info("tags formatted: {}", formattedTags);
         return formattedTags.toArray(new String[0]);
     }

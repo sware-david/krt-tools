@@ -17,6 +17,7 @@
 package io.github.sware.core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,15 +53,15 @@ public class CucumberTagInterpreter {
      * @see <a href=
      *      "https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber tag
      *      expression</a>
-     * @param tagsList Receives an ArrayList containing tags with the
+     * @param tagsList Receives an List containing tags with the
      *                 tag-expression-v2 syntax.<br>
      *                 Example:<br>
      *                 {@code @run and @debug or @testing and not @wip}
      * @return ArraysList with format of tag-expression-v1 (supported from Karate
      *         DSL).
      */
-    public static ArrayList<String> formatTags(ArrayList<String> tagsList) {
-        ArrayList<String> formatedTags = new ArrayList<>();
+    public static List<String> formatTags(List<String> tagsList) {
+        List<String> formatedTags = new ArrayList<>();
 
         tagsList.forEach(tag -> {
             for (String tSplitAnd : tag.split(" +([Aa][Nn][Dd]) +")) {

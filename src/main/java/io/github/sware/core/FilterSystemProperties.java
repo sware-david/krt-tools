@@ -58,11 +58,11 @@ public class FilterSystemProperties {
      *      "https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#karateoptions">Karate
      *      DLS options</a>
      * 
-     * @return ArrayList of tags configured from system properties, for example
+     * @return List of tags configured from system properties, for example
      *         <code>-Dkarate.options=... --tags @example1 or ... @etc</code>
      */
-    public static ArrayList<String> getTags() {
-        ArrayList<String> options = new ArrayList<>();
+    public static List<String> getTags() {
+        List<String> options = new ArrayList<>();
         String krtOptions = System.getProperty(KEY_OPTIONS, "");
         if (!krtOptions.isEmpty()) {
             logger.trace("get krt options from system: {} = '{}'", KEY_OPTIONS, krtOptions);
