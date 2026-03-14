@@ -51,6 +51,7 @@
 
         <!-- test project dependencies -->
         <testng.version>7.12.0</testng.version>
+        <jacoco-maven-plugin>0.8.14</jacoco-maven-plugin>
         <!-- Dependencies relates to Karate -->
         <logback.classic.version>1.5.32</logback.classic.version>
         <jcl.over.slf4j.version>2.0.17</jcl.over.slf4j.version>
@@ -133,6 +134,37 @@
                             <autoPublish>true</autoPublish>
                             <waitUntil>uploaded</waitUntil>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>coverage-sonarqube</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco-maven-plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <formats>
+                                        <format>XML</format>
+                                    </formats>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
