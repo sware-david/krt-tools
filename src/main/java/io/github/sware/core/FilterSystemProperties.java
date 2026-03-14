@@ -63,22 +63,22 @@ public class FilterSystemProperties {
      */
     public static List<String> getTags() {
         List<String> options = new ArrayList<>();
-        String krtOptions = System.getProperty(KEY_OPTIONS, "");
+        String krtOptions = System.getProperty(KEY_OPTIONS, "").trim();
         if (!krtOptions.isEmpty()) {
             logger.trace("get krt options from system: {} = '{}'", KEY_OPTIONS, krtOptions);
             AtomicReference<String> newKrtOptions = new AtomicReference<>(krtOptions);
-            List.of(krtOptions.split(" *(--|-)")).forEach(opt -> {
+            List.of(krtOptions.split("(^| +)(--|-)")).forEach(opt -> {
                 if (opt.startsWith("tags") || opt.startsWith("t")) {
                     String clearOption = opt.replaceAll("^((tags|t)=? *(?=[~@]|not))", "").trim();
                     if (clearOption.startsWith("@") || clearOption.startsWith("~") || clearOption.startsWith("not")) {
                         options.add(clearOption);
-                        newKrtOptions.set(newKrtOptions.get().replaceFirst(" *(--tags|-t) *" + clearOption, ""));
+                        newKrtOptions.set(newKrtOptions.get().replaceFirst("(^| +)(--tags|-t) *" + clearOption, ""));
                         logger.debug("tags added: {}", clearOption);
                     } else if (clearOption.replaceFirst("(tags|t)", "").isEmpty()) {
-                        newKrtOptions.set(newKrtOptions.get().replaceFirst(" *(--tags|-t)", ""));
+                        newKrtOptions.set(newKrtOptions.get().replaceFirst("(^| +)(--tags|-t)", ""));
                         logger.warn("removing tag option empty '{}'", opt);
                     } else if (opt.matches("^((tags|t)[= ]).+")) {
-                        newKrtOptions.set(newKrtOptions.get().replaceFirst(" *(--|-)" + opt, ""));
+                        newKrtOptions.set(newKrtOptions.get().replaceFirst("(^| +)(--|-)" + opt, ""));
                         logger.warn("removing tag option malformed '{}'", opt);
                     } else {
                         logger.debug("the option can be omitted '{}'", opt);
