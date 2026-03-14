@@ -8,7 +8,7 @@
     <artifactId>krt-tools</artifactId>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Krt Tools provides complementary tools for karate testing</description>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <inceptionYear>2026</inceptionYear>
     <url>https://github.com/sware-david/krt-tools</url>
 
@@ -55,12 +55,13 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.9</version>
+            <version>1.5.32</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.32</version>
+            <version>2.0.17</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>

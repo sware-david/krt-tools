@@ -18,6 +18,7 @@ package io.github.sware.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +30,11 @@ import org.slf4j.LoggerFactory;
  */
 
 public class FilterSystemProperties {
+    private FilterSystemProperties() {
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(FilterSystemProperties.class);
-    private static final String keyOptions = "karate.options";
+    private static final String KEY_OPTIONS = "karate.options";
 
     /**
      * <code>Spanish</code><br>
@@ -54,27 +58,35 @@ public class FilterSystemProperties {
      *      "https://github.com/karatelabs/karate/tree/v1.5.2?tab=readme-ov-file#karateoptions">Karate
      *      DLS options</a>
      * 
-     * @return ArrayList of tags configured from system properties, for example
+     * @return List of tags configured from system properties, for example
      *         <code>-Dkarate.options=... --tags @example1 or ... @etc</code>
      */
-    public static ArrayList<String> getTags() {
-        ArrayList<String> options = new ArrayList<>();
-        String krtOptions = System.getProperty(keyOptions, "");
+    public static List<String> getTags() {
+        List<String> options = new ArrayList<>();
+        String krtOptions = System.getProperty(KEY_OPTIONS, "");
         if (!krtOptions.isEmpty()) {
-            logger.trace("get krt options from system: {} = '{}'", keyOptions, krtOptions);
-            List.of(krtOptions.split("^(--|-)| +(--|-)")).forEach(opt -> {
+            logger.trace("get krt options from system: {} = '{}'", KEY_OPTIONS, krtOptions);
+            AtomicReference<String> newKrtOptions = new AtomicReference<>(krtOptions);
+            List.of(krtOptions.split(" *(--|-)")).forEach(opt -> {
                 if (opt.startsWith("tags") || opt.startsWith("t")) {
-                    String clearOption = opt.replaceAll("^(tags|t[ ]*?(?=@))", "").trim();
-                    if (!clearOption.isEmpty() && clearOption.startsWith("@")) {
+                    String clearOption = opt.replaceAll("^((tags|t)=? *(?=[~@]|not))", "").trim();
+                    if (clearOption.startsWith("@") || clearOption.startsWith("~") || clearOption.startsWith("not")) {
                         options.add(clearOption);
+                        newKrtOptions.set(newKrtOptions.get().replaceFirst(" *(--tags|-t) *" + clearOption, ""));
                         logger.debug("tags added: {}", clearOption);
+                    } else if (clearOption.replaceFirst("(tags|t)", "").isEmpty()) {
+                        newKrtOptions.set(newKrtOptions.get().replaceFirst(" *(--tags|-t)", ""));
+                        logger.warn("removing tag option empty '{}'", opt);
+                    } else if (opt.matches("^((tags|t)[= ]).+")) {
+                        newKrtOptions.set(newKrtOptions.get().replaceFirst(" *(--|-)" + opt, ""));
+                        logger.warn("removing tag option malformed '{}'", opt);
                     } else {
-                        logger.warn("the option can be omitted {}", clearOption);
+                        logger.debug("the option can be omitted '{}'", opt);
                     }
                 }
             });
 
-            removeTagsFromOptions();
+            updateOptions(newKrtOptions.get());
         }
         return options;
     }
@@ -83,11 +95,9 @@ public class FilterSystemProperties {
      * This method cleans up the <code>karate.options</code> system property at
      * runtime.
      */
-    private static void removeTagsFromOptions() {
-        String krtOptions = System.getProperty(keyOptions);
-        krtOptions = krtOptions.replaceAll("(--tags|-t[ ]*@).*?(?=( -|$))", "").trim();
-        System.setProperty(keyOptions, krtOptions);
+    private static void updateOptions(String krtNewOptions) {
+        System.setProperty(KEY_OPTIONS, krtNewOptions);
         logger.debug("clear options has been completed.");
-        logger.trace("new value of {} is: {}", keyOptions, krtOptions);
+        logger.trace("new value of {} is: {}", KEY_OPTIONS, krtNewOptions);
     }
 }
