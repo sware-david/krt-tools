@@ -98,8 +98,7 @@ public class CucumberTagInterpreterTest {
         plainTextTags.add("@TST-001 and @TST-COV-01 and not @skipme and not @env");
         results = CucumberTagInterpreter.formatTags(plainTextTags);
 
-        Assert.assertEquals(results.size(), getAndOperatorCount(plainTextTags),
-                String.format("Test multiple and operator", andOperator));
+        Assert.assertEquals(results.size(), getAndOperatorCount(plainTextTags), "Test multiple and operator");
         plainTextTags.clear();
     }
 

@@ -18,6 +18,4 @@ public class KrtToolsTest {
         String[] tagsFormated = KrtTools.configTags("@test1 or not @test");
         Assert.assertTrue(tagsFormated.length != 0, "tags formated from class configuration");
     }
-
-    // TODO implements complete test cases
 }

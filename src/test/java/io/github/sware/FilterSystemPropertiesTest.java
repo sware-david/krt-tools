@@ -32,7 +32,7 @@ public class FilterSystemPropertiesTest {
         results = FilterSystemProperties.getTags();
 
         Assert.assertTrue(results.stream().allMatch(options.toString()::contains), "options filtered successfully");
-        logger.info("raw options {}", options.toString());
+        logger.info("raw options {}", options);
         logger.info("clean up options '{}'", results);
     }
 
@@ -46,6 +46,4 @@ public class FilterSystemPropertiesTest {
         results = FilterSystemProperties.getTags();
         Assert.assertTrue(results.isEmpty(), "options empty defined");
     }
-
-    // TODO implements complete test cases
 }
