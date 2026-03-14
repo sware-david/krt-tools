@@ -8,7 +8,7 @@
     <artifactId>krt-tools</artifactId>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Krt Tools provides complementary tools for karate testing</description>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <inceptionYear>2026</inceptionYear>
     <url>https://github.com/sware-david/krt-tools</url>
 
