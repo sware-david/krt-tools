@@ -22,9 +22,13 @@ Configure the dependency in the `pom.xml` file.
 <dependency>
     <groupId>io.github.sware-david</groupId>
     <artifactId>krt-tools</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0</version> <!-- Check the maven repository for the latest versions-->
 </dependency>
 ```
+### Official repositories
+[Maven repository](https://mvnrepository.com/artifact/io.github.sware-david/krt-tools)<br>
+[Maven central repository](https://central.sonatype.com/artifact/io.github.sware-david/krt-tools)
+
 
 ### Tags configuration for Karate
 
